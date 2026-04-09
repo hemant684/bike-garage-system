@@ -1,0 +1,21 @@
+[buildpacks]
+provider = "heroku"
+buildpacks = ["php"]
+
+[env]
+PORT = "8080"
+root_dir = "/"
+
+[[env.buildpacks]]
+rootdir = "/"
+
+[build]
+command = "composer install --no-dev"
+
+[[env]]
+name = "production"
+value = "true"
+
+[[env]]
+name = "Railway"
+value = "true"
