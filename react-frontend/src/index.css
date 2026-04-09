@@ -1,0 +1,15 @@
+/* Global styles - React specific */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+  background: #0d0d0d;
+}

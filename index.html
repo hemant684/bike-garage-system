@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Garage Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <style>
+        /* Hero Section with Bike Image */
+        .hero {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%),
+                        url('images/bikes/hero-bg.jpg') center/cover no-repeat;
+            padding: 150px 0;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.5) 100%);
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Bike Showcase Section */
+        .bike-showcase {
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
+        }
+        
+        .bike-showcase h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--text-primary);
+        }
+        
+        .bike-showcase h2 i {
+            color: var(--garage-red);
+            margin-right: 15px;
+        }
+        
+        .bike-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .bike-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid var(--dark-border);
+            position: relative;
+        }
+        
+        .bike-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(230, 57, 70, 0.2);
+            border-color: var(--garage-orange);
+        }
+        
+        .bike-image {
+            height: 200px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bike-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .bike-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+        }
+        
+        .bike-image-placeholder i {
+            font-size: 5rem;
+            color: rgba(230, 57, 70, 0.3);
+        }
+        
+        .bike-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--garage-red);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .bike-content {
+            padding: 25px;
+        }
+        
+        .bike-content h3 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .bike-content p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .bike-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--garage-orange);
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            padding: 80px 0;
+            background: var(--dark-secondary);
+        }
+        
+        .gallery-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--text-primary);
+        }
+        
+        .gallery-section h2 i {
+            color: var(--garage-orange);
+            margin-right: 15px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+        }
+        
+        .gallery-placeholder i {
+            font-size: 3rem;
+            color: rgba(230, 57, 70, 0.3);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-overlay h4 {
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-overlay p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+        }
+        
+        /* Video Section */
+        .video-section {
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--dark-secondary) 0%, var(--dark-bg) 100%);
+        }
+        
+        .video-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--text-primary);
+        }
+        
+        .video-section h2 i {
+            color: var(--garage-red);
+            margin-right: 15px;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .video-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover {
+            border-color: var(--garage-orange);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .video-thumbnail i {
+            font-size: 4rem;
+            color: var(--garage-orange);
+            transition: all 0.3s ease;
+        }
+        
+        .video-thumbnail:hover i {
+            transform: scale(1.2);
+            color: var(--garage-red);
+        }
+        
+        .play-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(230, 57, 70, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .play-button i {
+            color: white;
+            font-size: 2rem;
+            margin-left: 5px;
+        }
+        
+        .video-content {
+            padding: 20px;
+        }
+        
+        .video-content h4 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        
+        .video-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Spare Parts Section */
+        .parts-section {
+            padding: 80px 0;
+            background: var(--dark-bg);
+        }
+        
+        .parts-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--text-primary);
+        }
+        
+        .parts-section h2 i {
+            color: var(--garage-teal);
+            margin-right: 15px;
+        }
+        
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .part-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--dark-border);
+        }
+        
+        .part-card:hover {
+            border-color: var(--garage-teal);
+            transform: translateY(-5px);
+        }
+        
+        .part-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.2), rgba(0, 180, 216, 0.1));
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .part-icon i {
+            font-size: 2rem;
+            color: var(--garage-teal);
+        }
+        
+        .part-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        
+        .part-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--garage-dark) 0%, #16213e 100%);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-item i {
+            font-size: 2.5rem;
+            color: var(--garage-orange);
+            margin-bottom: 15px;
+        }
+        
+        .stat-item .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .stat-item .label {
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero {
+                padding: 100px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Image placeholders with gradients */
+        .placeholder-sports {
+            background: linear-gradient(135deg, #e63946 0%, #1a1a2e 100%);
+        }
+        
+        .placeholder-cruiser {
+            background: linear-gradient(135deg, #f77f00 0%, #1a1a2e 100%);
+        }
+        
+        .placeholder-scooter {
+            background: linear-gradient(135deg, #2a9d8f 0%, #1a1a2e 100%);
+        }
+        
+        .placeholder-offroad {
+            background: linear-gradient(135deg, #0077b6 0%, #1a1a2e 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i class="fas fa-motorcycle"></i> Bike Garage
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="pages/services.php">Services</a></li>
+                <li><a href="pages/about.php">About</a></li>
+                <li><a href="pages/faq.php">FAQ</a></li>
+                <li><a href="pages/contact.php">Contact</a></li>
+                <li><a href="login.php">Login</a></li>
+                <li><a href="register.php">Register</a></li>
+                <li><a href="admin/admin_login.php" style="color: var(--garage-orange);">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1><i class="fas fa-motorcycle"></i> Welcome to Bike Garage</h1>
+            <p>Professional bike servicing and maintenance at your fingertips. Book appointments, track service status, and manage your bike repairs online.</p>
+            <div class="hero-buttons">
+                <a href="register.php" class="btn btn-light">
+                    <i class="fas fa-user-plus"></i> Register Now
+                </a>
+                <a href="pages/services.php" class="btn btn-outline">
+                    <i class="fas fa-tools"></i> View Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <div class="number">10,000+</div>
+                    <div class="label">Bikes Serviced</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <div class="number">5,000+</div>
+                    <div class="label">Happy Customers</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-award"></i>
+                    <div class="number">15+</div>
+                    <div class="label">Expert Mechanics</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-star"></i>
+                    <div class="number">4.8</div>
+                    <div class="label">Customer Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bike Showcase Section -->
+    <section class="bike-showcase">
+        <div class="container">
+            <h2><i class="fas fa-bicycle"></i> Premium Bike Services</h2>
+            <div class="bike-grid">
+                <!-- Sports Bike -->
+                <div class="bike-card">
+                    <div class="bike-image">
+                        <div class="bike-image-placeholder placeholder-sports">
+                            <i class="fas fa-motorcycle"></i>
+                        </div>
+                        <span class="bike-badge">Popular</span>
+                    </div>
+                    <div class="bike-content">
+                        <h3>Sports Bike Service</h3>
+                        <p>Specialized care for high-performance sports bikes including engine tuning, fairing repairs, and performance upgrades.</p>
+                        <div class="bike-price">From ₹1,500</div>
+                        <a href="pages/services.php" class="btn btn-outline mt-20" style="width: 100%; text-align: center;">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cruiser Bike -->
+                <div class="bike-card">
+                    <div class="bike-image">
+                        <div class="bike-image-placeholder placeholder-cruiser">
+                            <i class="fas fa-motorcycle"></i>
+                        </div>
+                    </div>
+                    <div class="bike-content">
+                        <h3>Cruiser Bike Service</h3>
+                        <p>Expert maintenance for cruiser bikes including leather care, custom modifications, and long-distance touring prep.</p>
+                        <div class="bike-price">From ₹1,200</div>
+                        <a href="pages/services.php" class="btn btn-outline mt-20" style="width: 100%; text-align: center;">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Scooter -->
+                <div class="bike-card">
+                    <div class="bike-image">
+                        <div class="bike-image-placeholder placeholder-scooter">
+                            <i class="fas fa-scooter"></i>
+                        </div>
+                        <span class="bike-badge" style="background: var(--garage-green);">Economical</span>
+                    </div>
+                    <div class="bike-content">
+                        <h3>Scooter Service</h3>
+                        <p>Quick and affordable servicing for scooters including CVT maintenance, belt replacement, and body repairs.</p>
+                        <div class="bike-price">From ₹500</div>
+                        <a href="pages/services.php" class="btn btn-outline mt-20" style="width: 100%; text-align: center;">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spare Parts Section -->
+    <section class="parts-section">
+        <div class="container">
+            <h2><i class="fas fa-cogs"></i> Quality Spare Parts</h2>
+            <div class="parts-grid">
+                <div class="part-card">
+                    <div class="part-icon">
+                        <i class="fas fa-oil-can"></i>
+                    </div>
+                    <h4>Engine Oil</h4>
+                    <p>Premium synthetic oils for all bike brands</p>
+                </div>
+                <div class="part-card">
+                    <div class="part-icon">
+                        <i class="fas fa-circle-notch"></i>
+                    </div>
+                    <h4>Brake Pads</h4>
+                    <p>High-performance brake components</p>
+                </div>
+                <div class="part-card">
+                    <div class="part-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h4>Chain & Sprocket</h4>
+                    <p>Durable chain kits and sprockets</p>
+                </div>
+                <div class="part-card">
+                    <div class="part-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h4>Filters</h4>
+                    <p>Air, oil, and fuel filters</p>
+                </div>
+                <div class="part-card">
+                    <div class="part-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>LED Lights</h4>
+                    <p>Bright LED upgrades and accessories</p>
+                </div>
+                <div class="part-card">
+                    <div class="part-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Helmets</h4>
+                    <p>Certified safety helmets</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <h2><i class="fas fa-images"></i> Our Work Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-placeholder placeholder-sports">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Engine Repair</h4>
+                        <p>Complete engine overhaul</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder placeholder-cruiser">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Custom Paint</h4>
+                        <p>Premium finishing</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder placeholder-scooter">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Regular Service</h4>
+                        <p>Maintenance & tuning</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder" style="background: linear-gradient(135deg, #7209b7 0%, #1a1a2e 100%);">
+                        <i class="fas fa-car-battery"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Electrical Work</h4>
+                        <p>Wiring & diagnostics</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder" style="background: linear-gradient(135deg, #4361ee 0%, #1a1a2e 100%);">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Insurance Work</h4>
+                        <p>Claim processing</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder" style="background: linear-gradient(135deg, #3a0ca3 0%, #1a1a2e 100%);">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>AC Service</h4>
+                        <p>Cooling system maintenance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <h2><i class="fas fa-video"></i> Watch Our Services</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e63946 0%, #1a1a2e 100%);">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-content">
+                        <h4>Full Service Process</h4>
+                        <p>Watch our expert mechanics perform a complete bike service from start to finish.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f77f00 0%, #1a1a2e 100%);">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-content">
+                        <h4>Before & After</h4>
+                        <p>Amazing transformations of bikes that came in damaged and left looking brand new.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <div class="placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #2a9d8f 0%, #1a1a2e 100%);">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-content">
+                        <h4>Customer Reviews</h4>
+                        <p>Hear from our satisfied customers about their experience with Bike Garage.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="text-center">Why Choose Us</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Easy Booking</h3>
+                    <p>Book your bike service online with just a few clicks. Choose your preferred date and time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Expert Mechanics</h3>
+                    <p>Our certified technicians provide top-notch service for all bike brands and models.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3>Transparent Pricing</h3>
+                    <p>Get detailed bills with breakdown of labor and parts cost. No hidden charges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Service History</h3>
+                    <p>Keep track of all your bike's service history and maintenance records.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Status Updates</h3>
+                    <p>Get real-time updates on your bike's service status and completion.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Reports</h3>
+                    <p>Comprehensive reports on services, revenue, and maintenance for admins.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section style="background: linear-gradient(135deg, var(--primary-color), var(--garage-red)); color: white; padding: 80px 0; text-align: center;">
+        <div class="container">
+            <h2><i class="fas fa-motorcycle"></i> Ready to Experience Quality Service?</h2>
+            <p style="margin: 20px 0; opacity: 0.9; font-size: 1.1rem;">Join thousands of satisfied customers who trust us with their bikes</p>
+            <div class="hero-buttons">
+                <a href="register.php" class="btn btn-light">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </a>
+                <a href="pages/contact.php" class="btn btn-outline" style="border-color: white; color: white;">
+                    <i class="fas fa-phone-alt"></i> Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Bike Garage Management System. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <a href="pages/about.php">About</a> | 
+                <a href="pages/services.php">Services</a> | 
+                <a href="pages/faq.php">FAQ</a> | 
+                <a href="pages/contact.php">Contact</a>
+            </p>
+            <p style="margin-top: 5px; font-size: 0.85rem;">
+                <a href="pages/privacy.php">Privacy Policy</a> | 
+                <a href="pages/terms.php">Terms & Conditions</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/validation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+</body>
+</html>
+
