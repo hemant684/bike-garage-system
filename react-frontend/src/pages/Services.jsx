@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx'
 const Services = () => {
   return (
     <>
+      <Navbar />
       {/* Hero Section */}
       <section className="services-hero">
         <div className="container">

@@ -1,17 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Navbar from '../components/Navbar.jsx'
 import Footer from '../components/Footer.jsx'
 
 const UserDashboard = () => {
-  const [stats, setStats] = useState({
-    totalBookings: 0,
-    completedServices: 0,
-    pendingServices: 0,
-    totalSpent: 0
+  const [stats] = useState({
+    totalBookings: 3,
+    completedServices: 2,
+    pendingServices: 1,
+    totalSpent: 2450
   })
-  const [bookings, setBookings] = useState([])
-  const [bills, setBills] = useState([])
-  const [user, setUser] = useState({
+  const [bookings] = useState([
+    { id: 1, service_type: 'Regular Service', status: 'completed', booking_date: '15 Jan 2024', bike_number: 'MH12AB1234' },
+    { id: 2, service_type: 'Repair', status: 'pending', booking_date: '20 Jan 2024', bike_number: 'MH12AB1234' }
+  ])
+  const [bills] = useState([
+    { id: 1, service_type: 'Regular Service', total_amount: 926.50, payment_status: 'paid', date: '15 Jan 2024' }
+  ])
+  const [user] = useState({
     fullName: 'John Doe',
     email: 'john@example.com',
     phone: '9876543210',
@@ -20,24 +25,6 @@ const UserDashboard = () => {
   })
   const [showModal, setShowModal] = useState(false)
   const [success, setSuccess] = useState('')
-
-  // Simulate API calls (replace with real fetch('/api/user/stats'))
-  useEffect(() => {
-    // Mock data
-    setStats({
-      totalBookings: 3,
-      completedServices: 2,
-      pendingServices: 1,
-      totalSpent: 2450
-    })
-    setBookings([
-      { id: 1, service_type: 'Regular Service', status: 'completed', booking_date: '15 Jan 2024', bike_number: 'MH12AB1234' },
-      { id: 2, service_type: 'Repair', status: 'pending', booking_date: '20 Jan 2024', bike_number: 'MH12AB1234' }
-    ])
-    setBills([
-      { id: 1, service_type: 'Regular Service', total_amount: 926.50, payment_status: 'paid', date: '15 Jan 2024' }
-    ])
-  }, [])
 
   const handleUpdateProfile = (e) => {
     e.preventDefault()

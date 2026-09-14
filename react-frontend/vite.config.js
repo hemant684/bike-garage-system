@@ -11,8 +11,6 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       },
-      '/admin': 'http://localhost:8888',
-      '/user': 'http://localhost:8888',
       '/login.php': 'http://localhost:8888',
       '/register.php': 'http://localhost:8888'
     }

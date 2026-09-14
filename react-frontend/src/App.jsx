@@ -5,13 +5,11 @@ import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import UserDashboard from './pages/UserDashboard.jsx'
 import BookService from './pages/BookService.jsx'
-import Navbar from './components/Navbar.jsx'
-import Footer from './components/Footer.jsx'
+import AdminDashboard from './pages/AdminDashboard.jsx'
 
 function App() {
   return (
     <Router>
-      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
@@ -19,11 +17,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/user/dashboard" element={<UserDashboard />} />
         <Route path="/book-service" element={<BookService />} />
-import AdminDashboard from './pages/AdminDashboard.jsx'
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
-      <Footer />
     </Router>
   );
 }

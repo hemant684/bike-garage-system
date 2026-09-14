@@ -1,51 +1,34 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Navbar from '../components/Navbar.jsx'
 import Footer from '../components/Footer.jsx'
 
 const AdminDashboard = () => {
-  const [stats, setStats] = useState({
-    totalUsers: 0,
-    totalBookings: 0,
-    pendingServices: 0,
-    completedServices: 0,
-    totalRevenue: 0,
-    todayBookings: 0
+  const [stats] = useState({
+    totalUsers: 25,
+    totalBookings: 150,
+    pendingServices: 12,
+    completedServices: 120,
+    totalRevenue: 125000,
+    todayBookings: 5
   })
-  const [monthlyRevenue, setMonthlyRevenue] = useState(Array(12).fill(0))
-  const [statusDistribution, setStatusDistribution] = useState({})
-  const [recentBookings, setRecentBookings] = useState([])
-  const [recentUsers, setRecentUsers] = useState([])
-  const [recentBills, setRecentBills] = useState([])
-
-  // Mock data (replace with API)
-  useEffect(() => {
-    setStats({
-      totalUsers: 25,
-      totalBookings: 150,
-      pendingServices: 12,
-      completedServices: 120,
-      totalRevenue: 125000,
-      todayBookings: 5
-    })
-    setMonthlyRevenue([5000, 8000, 12000, 15000, 18000, 22000, 20000, 25000, 28000, 30000, 32000, 35000])
-    setStatusDistribution({
+  const [monthlyRevenue] = useState([5000, 8000, 12000, 15000, 18000, 22000, 20000, 25000, 28000, 30000, 32000, 35000])
+  const [statusDistribution] = useState({
       pending: 12,
       approved: 8,
       'in_progress': 25,
       completed: 95,
       cancelled: 10
     })
-    setRecentBookings([
+  const [recentBookings] = useState([
       { full_name: 'John Doe', bike_model: 'Honda Activa', service_type: 'Regular Service', status: 'completed' },
       { full_name: 'Jane Smith', bike_model: 'Royal Enfield', service_type: 'Repair', status: 'pending' }
     ])
-    setRecentUsers([
+  const [recentUsers] = useState([
       { full_name: 'New User', bike_model: 'Bajaj Pulsar', created_at: '2024-01-10' }
     ])
-    setRecentBills([
+  const [recentBills] = useState([
       { id: 123, full_name: 'John Doe', service_type: 'Regular Service', total_amount: 926.50, payment_status: 'paid' }
     ])
-  }, [])
 
   const exportData = () => {
     const data = { stats, monthlyRevenue, statusDistribution }
@@ -76,7 +59,7 @@ const AdminDashboard = () => {
       <div className="dashboard-header">
         <div className="container">
           <h1><i className="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
-          <p>Welcome back, Admin! Here's what's happening.</p>
+          <p>Welcome back, Admin! Here&apos;s what&apos;s happening.</p>
           <div className="welcome-badge">
             <i className="fas fa-calendar-alt"></i> {new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
           </div>

@@ -83,7 +83,7 @@ const Login = () => {
               </div>
 
               <div className="text-center mt-20" style={{borderTop: '1px solid var(--dark-border)', paddingTop: '20px'}}>
-                <p>Don't have an account? 
+                <p>Don&apos;t have an account? 
                   <a href="/register">
                     <i className="fas fa-user-plus"></i> Register here
                   </a>
