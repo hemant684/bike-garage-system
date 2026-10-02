@@ -24,30 +24,28 @@ A web-based system for managing bike servicing and repairs. The legacy applicati
 
 ```
 bike-garage-system/
-├── react-frontend/             # Next.js customer-facing frontend
-│   ├── app/                    # App Router pages and shared layout
-│   └── src/                    # React page components and light theme
-├── config/
-│   └── db_config.php          # Database configuration
-├── css/
-│   └── style.css              # Main stylesheet
-├── js/
-│   └── validation.js          # Client-side validation
-├── admin/
-│   ├── admin_login.php        # Admin login page
-│   ├── admin_dashboard.php    # Admin dashboard
-│   ├── manage_booking.php     # Manage service bookings
-│   └── report.php             # Reports page
-├── user/
-│   ├── user_dashboard.php     # User dashboard
-│   ├── book_service.php       # Book service page
-│   └── view_bill.php          # View bills page
-├── database.sql               # Database schema and sample data
-├── index.html                 # Landing page
-├── login.php                  # User login page
-├── register.php               # User registration page
-└── forgot_password.php        # Password recovery page
+├── react-frontend/       # Next.js customer-facing app
+├── admin/                # PHP administration pages
+├── user/                 # PHP customer account and service pages
+├── superadmin/           # PHP superadmin pages
+├── pages/                # Additional PHP informational pages
+├── api/                  # PHP API endpoints
+├── config/               # PHP database, security, and shared helpers
+├── css/, js/, images/    # Legacy PHP frontend assets
+├── docs/
+│   ├── deployment/       # Backend, deployment, and Railway guides
+│   ├── development/      # Implementation notes and project status
+│   └── setup/            # Local setup instructions
+├── database.sql          # Database schema and sample data
+└── *.php                 # Root PHP entry points and setup utilities
 ```
+
+## Documentation
+
+- [Local setup guide](./docs/setup/README_SETUP.md)
+- [Deployment guide](./docs/deployment/DEPLOYMENT_GUIDE.md)
+- [Backend deployment guide](./docs/deployment/BACKEND_DEPLOYMENT.md)
+- [Development notes](./docs/development/IMPLEMENTATION_PLAN.md)
 
 ## Next.js React Frontend
 

@@ -9,14 +9,12 @@ Your Bike Garage system has **two components** that need separate hosting:
 
 ---
 
-## **PART 1: Deploy React Frontend to Netlify**
+## **PART 1: Deploy Next.js Frontend to Netlify**
 
 ### **Step 1: Prepare the Project**
 
-The React frontend is already built and ready. The build files are in:
-```
-react-frontend/dist/
-```
+The Next.js frontend is in `react-frontend/`. Netlify reads the repository's
+`netlify.toml` to use that folder as the site base and run `npm run build`.
 
 ### **Step 2: Create GitHub Repository**
 
@@ -64,15 +62,14 @@ react-frontend/dist/
    - Click "Deploy site"
 
 3. **Configure Build Settings**
-   - Build command: `cd react-frontend && npm install && npm run build`
-   - Publish directory: `react-frontend/dist`
+   - Use the settings from `netlify.toml` (base directory: `react-frontend`, build command: `npm run build`)
+   - Leave the publish directory unset; Netlify's Next.js runtime handles the build output
 
 4. **Add Environment Variables**
    - Go to Site settings → Build & deploy → Environment
    - Add these variables:
      ```
-     VITE_API_URL = https://your-backend-domain.com
-     VITE_ADMIN_URL = https://your-backend-domain.com/admin
+     NEXT_PUBLIC_PHP_BACKEND_URL = https://your-backend-domain.com
      ```
 
 5. **Deploy**
@@ -178,23 +175,12 @@ After deploying both frontend and backend:
 
 1. **On Netlify Dashboard:**
    - Go to Site settings → Build & deploy → Environment
-   - Update `VITE_API_URL` with your backend domain:
+   - Set `NEXT_PUBLIC_PHP_BACKEND_URL` to your backend domain:
      ```
-     VITE_API_URL = https://your-backend.railway.app
+     NEXT_PUBLIC_PHP_BACKEND_URL = https://your-backend.railway.app
      ```
 
-2. **Update vite.config.js** (for production proxies):
-   ```javascript
-   proxy: {
-     '/api': {
-       target: 'https://your-backend.railway.app',
-       changeOrigin: true,
-       rewrite: (path) => path.replace(/^\/api/, '')
-     }
-   }
-   ```
-
-3. **Trigger new build** on Netlify
+2. **Trigger new build** on Netlify
    - Go to Deploys
    - Click "Trigger deploy" for a full build
 

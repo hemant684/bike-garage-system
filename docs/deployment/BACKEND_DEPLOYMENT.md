@@ -62,7 +62,7 @@ MYSQL_DATABASE=bike_garage
 ### **Step 6: Update Frontend to Point to Backend**
 In Netlify:
 1. Go to Site Settings → Build & deploy → Environment
-2. Update `VITE_API_URL` to: `https://your-railway-url.up.railway.app`
+2. Set `NEXT_PUBLIC_PHP_BACKEND_URL` to: `https://your-railway-url.up.railway.app`
 3. Trigger a new build
 4. Your frontend now connects to your backend!
 
@@ -138,7 +138,7 @@ Once your backend is deployed:
 3. Go to: Site settings → Build & deploy → Environment
 4. Add variable:
    ```
-   VITE_API_URL=https://your-backend-domain.com
+   NEXT_PUBLIC_PHP_BACKEND_URL=https://your-backend-domain.com
    ```
 5. Or for specific services:
    - Railway: `https://your-project.up.railway.app`
@@ -205,7 +205,7 @@ git push origin main
 - For Railway: Wait 2-3 minutes for MySQL to boot
 
 ### "404 on admin page"
-- Check `VITE_API_URL` is set in Netlify
+- Check `NEXT_PUBLIC_PHP_BACKEND_URL` is set in Netlify
 - Verify backend domain is correct
 - Check CORS headers in PHP config
 
