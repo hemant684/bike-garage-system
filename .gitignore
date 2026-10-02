@@ -8,6 +8,7 @@ package-lock.json
 # Production
 /build
 /dist
+.netlify/
 /react-frontend/dist
 /react-frontend/.next
 /react-frontend/out
