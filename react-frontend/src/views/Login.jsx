@@ -1,24 +1,9 @@
-import { useState } from 'react'
 import Navbar from '../components/Navbar.jsx'
+import Link from 'next/link'
 import Footer from '../components/Footer.jsx'
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Client validation (validation.js handles)
-    if (!email || !password) {
-      setError('Please fill all fields')
-      return
-    }
-    // TODO: API call to /api/login.php
-    console.log('Login:', { email, password })
-    setError('')
-    // Redirect to /user/dashboard
-  }
+  const backendUrl = process.env.NEXT_PUBLIC_PHP_BACKEND_URL ?? ''
 
   return (
     <>
@@ -27,7 +12,7 @@ const Login = () => {
         <div className="container">
           <h1><i className="fas fa-sign-in-alt"></i> User Login</h1>
           <div className="breadcrumb">
-            <a href="/">Home</a> / <span>Login</span>
+            <Link href="/">Home</Link> / <span>Login</span>
           </div>
         </div>
       </section>
@@ -35,13 +20,7 @@ const Login = () => {
       <section className="content-section">
         <div className="container">
           <div className="form-container">
-            {error && (
-              <div className="alert alert-danger">
-                <i className="fas fa-exclamation-circle"></i> {error}
-              </div>
-            )}
-
-            <form id="loginForm" onSubmit={handleSubmit}>
+            <form id="loginForm" method="post" action={`${backendUrl}/login.php`}>
               <div className="form-group">
                 <label htmlFor="email">
                   <i className="fas fa-envelope"></i> Email Address
@@ -50,9 +29,9 @@ const Login = () => {
                   type="email" 
                   className="form-control" 
                   id="email" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                   placeholder="Enter your email" 
+                  required
                 />
               </div>
 
@@ -64,9 +43,9 @@ const Login = () => {
                   type="password" 
                   className="form-control" 
                   id="password" 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
                   placeholder="Enter your password"
+                  required
                 />
               </div>
 
@@ -77,16 +56,16 @@ const Login = () => {
               </div>
 
               <div className="text-center mt-20">
-                <a href="/forgot-password" className="forgot-password">
+                <a href={`${backendUrl}/forgot_password.php`} className="forgot-password">
                   <i className="fas fa-question-circle"></i> Forgot Password?
                 </a>
               </div>
 
               <div className="text-center mt-20" style={{borderTop: '1px solid var(--dark-border)', paddingTop: '20px'}}>
                 <p>Don&apos;t have an account? 
-                  <a href="/register">
+                  <Link href="/register">
                     <i className="fas fa-user-plus"></i> Register here
-                  </a>
+                  </Link>
                 </p>
               </div>
             </form>

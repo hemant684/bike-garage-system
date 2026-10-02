@@ -1,8 +1,11 @@
+'use client'
+
 import { useState } from 'react'
 import Navbar from '../components/Navbar.jsx'
 import Footer from '../components/Footer.jsx'
 
 const AdminDashboard = () => {
+  const backendUrl = process.env.NEXT_PUBLIC_PHP_BACKEND_URL ?? ''
   const [stats] = useState({
     totalUsers: 25,
     totalBookings: 150,
@@ -20,15 +23,22 @@ const AdminDashboard = () => {
       cancelled: 10
     })
   const [recentBookings] = useState([
-      { full_name: 'John Doe', bike_model: 'Honda Activa', service_type: 'Regular Service', status: 'completed' },
-      { full_name: 'Jane Smith', bike_model: 'Royal Enfield', service_type: 'Repair', status: 'pending' }
+      { id: 1, full_name: 'John Doe', email: 'john@example.com', bike_model: 'Honda Activa', service_type: 'Regular Service', status: 'completed' },
+      { id: 2, full_name: 'Jane Smith', email: 'jane@example.com', bike_model: 'Royal Enfield', service_type: 'Repair', status: 'pending' }
     ])
   const [recentUsers] = useState([
-      { full_name: 'New User', bike_model: 'Bajaj Pulsar', created_at: '2024-01-10' }
+      { id: 1, full_name: 'New User', email: 'new@example.com', bike_model: 'Bajaj Pulsar', created_at: '2024-01-10' }
     ])
   const [recentBills] = useState([
       { id: 123, full_name: 'John Doe', service_type: 'Regular Service', total_amount: 926.50, payment_status: 'paid' }
     ])
+  const today = new Date().toLocaleDateString('en-GB', {
+    timeZone: 'UTC',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
 
   const exportData = () => {
     const data = { stats, monthlyRevenue, statusDistribution }
@@ -42,13 +52,13 @@ const AdminDashboard = () => {
 
   const getStatusColor = (status) => {
     const colors = {
-      pending: '#f77f00',
-      approved: '#00b4d8',
-      'in_progress': '#fcbf49',
-      completed: '#2a9d8f',
-      cancelled: '#e63946'
+      pending: 'var(--garage-orange)',
+      approved: 'var(--garage-teal)',
+      'in_progress': 'var(--garage-yellow)',
+      completed: 'var(--garage-green)',
+      cancelled: 'var(--garage-red)'
     }
-    return colors[status] || '#666'
+    return colors[status] || 'var(--text-muted)'
   }
 
   const totalBookings = Object.values(statusDistribution).reduce((a, b) => a + b, 0)
@@ -61,13 +71,17 @@ const AdminDashboard = () => {
           <h1><i className="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
           <p>Welcome back, Admin! Here&apos;s what&apos;s happening.</p>
           <div className="welcome-badge">
-            <i className="fas fa-calendar-alt"></i> {new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+            <i className="fas fa-calendar-alt"></i> <span suppressHydrationWarning>{today}</span>
           </div>
         </div>
       </div>
 
       <section className="content-section">
         <div className="container">
+          <div className="alert alert-info">
+            Analytics below are preview data.{' '}
+            <a href={`${backendUrl}/admin/admin_dashboard.php`}>Open the live admin dashboard</a>
+          </div>
           {/* Stats */}
           <div className="stats-grid">
             <div className="stat-box users">
@@ -104,11 +118,11 @@ const AdminDashboard = () => {
 
           {/* Quick Actions */}
           <div className="quick-actions">
-            <a href="/manage-bookings" className="action-btn">
+            <a href={`${backendUrl}/admin/manage_booking.php`} className="action-btn">
               <i className="fas fa-tasks"></i>
               <span>Bookings</span>
             </a>
-            <a href="/reports" className="action-btn">
+            <a href={`${backendUrl}/admin/report.php`} className="action-btn">
               <i className="fas fa-chart-bar"></i>
               <span>Reports</span>
             </a>

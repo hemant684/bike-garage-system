@@ -1,19 +1,21 @@
+import Link from 'next/link'
+
 const Navbar = () => {
+  const backendUrl = process.env.NEXT_PUBLIC_PHP_BACKEND_URL ?? ''
+
   return (
     <nav className="navbar">
       <div className="container">
-        <a href="/" className="navbar-brand">
+        <Link href="/" className="navbar-brand">
           <i className="fas fa-motorcycle"></i> Bike Garage
-        </a>
-        <ul className="nav-links">
-          <li><a href="/" className="active">Home</a></li>
-          <li><a href="/services">Services</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/faq">FAQ</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Register</a></li>
-          <li><a href="/admin" style={{color: 'var(--garage-orange)'}}>Admin</a></li>
+        </Link>
+        <ul className="nav-links" aria-label="Main navigation">
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/services">Services</Link></li>
+          <li><Link href="/book-service">Book service</Link></li>
+          <li><Link href="/login">Login</Link></li>
+          <li><Link href="/register" className="nav-register">Get started</Link></li>
+          <li><a href={`${backendUrl}/admin_login.php`}>Admin</a></li>
         </ul>
       </div>
     </nav>

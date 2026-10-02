@@ -1,4 +1,7 @@
+'use client'
+
 import { useState } from 'react'
+import Link from 'next/link'
 import Navbar from '../components/Navbar.jsx'
 import Footer from '../components/Footer.jsx'
 
@@ -13,31 +16,13 @@ const Register = () => {
     password: '',
     confirmPassword: ''
   })
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const backendUrl = process.env.NEXT_PUBLIC_PHP_BACKEND_URL ?? ''
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Client validation
-    if (!formData.fullName || !formData.email || !formData.phone || !formData.bikeModel || !formData.bikeNumber || !formData.password) {
-      setError('Please fill required fields')
-      return
-    }
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      return
-    }
-    // TODO: API /api/register.php
-    console.log('Register:', formData)
-    setError('')
-    setSuccess('Registration successful! Redirecting to login...')
   }
 
   return (
@@ -47,7 +32,7 @@ const Register = () => {
         <div className="container">
           <h1><i className="fas fa-user-plus"></i> User Registration</h1>
           <div className="breadcrumb">
-            <a href="/">Home</a> / <span>Register</span>
+            <Link href="/">Home</Link> / <span>Register</span>
           </div>
         </div>
       </section>
@@ -55,18 +40,7 @@ const Register = () => {
       <section className="content-section">
         <div className="container">
           <div className="form-container" style={{maxWidth: '600px'}}>
-            {error && (
-              <div className="alert alert-danger">
-                <i className="fas fa-exclamation-circle"></i> {error}
-              </div>
-            )}
-            {success && (
-              <div className="alert alert-success">
-                <i className="fas fa-check-circle"></i> {success}
-              </div>
-            )}
-
-            <form id="registerForm" onSubmit={handleSubmit}>
+            <form id="registerForm" method="post" action={`${backendUrl}/register.php`}>
               {/* Personal */}
               <h3 style={{marginBottom: '20px', color: 'var(--garage-blue)'}}>
                 <i className="fas fa-user"></i> Personal Information
@@ -78,7 +52,7 @@ const Register = () => {
                 </label>
                 <input type="text" className="form-control" id="fullName" name="fullName" 
                   value={formData.fullName} onChange={handleChange}
-                  placeholder="Enter your full name" />
+                  placeholder="Enter your full name" required />
               </div>
 
               <div className="form-group">
@@ -87,7 +61,7 @@ const Register = () => {
                 </label>
                 <input type="email" className="form-control" id="email" name="email" 
                   value={formData.email} onChange={handleChange}
-                  placeholder="Enter your email" />
+                  placeholder="Enter your email" required />
               </div>
 
               <div className="form-group">
@@ -96,7 +70,7 @@ const Register = () => {
                 </label>
                 <input type="tel" className="form-control" id="phone" name="phone" 
                   value={formData.phone} onChange={handleChange}
-                  placeholder="10-digit mobile number" />
+                  placeholder="10-digit mobile number" pattern="[6-9][0-9]{9}" required />
               </div>
 
               <div className="form-group">
@@ -119,7 +93,7 @@ const Register = () => {
                 </label>
                 <input type="text" className="form-control" id="bikeModel" name="bikeModel" 
                   value={formData.bikeModel} onChange={handleChange}
-                  placeholder="e.g., Honda Activa" />
+                  placeholder="e.g., Honda Activa" required />
               </div>
 
               <div className="form-group">
@@ -128,7 +102,7 @@ const Register = () => {
                 </label>
                 <input type="text" className="form-control" id="bikeNumber" name="bikeNumber" 
                   value={formData.bikeNumber} onChange={handleChange}
-                  placeholder="e.g., MH12AB1234" />
+                  placeholder="e.g., MH12AB1234" required />
               </div>
 
               {/* Password */}
@@ -142,7 +116,7 @@ const Register = () => {
                 </label>
                 <input type="password" className="form-control" id="password" name="password" 
                   value={formData.password} onChange={handleChange}
-                  placeholder="At least 6 chars + letter/number" />
+                  placeholder="At least 6 chars + letter/number" minLength={6} required />
               </div>
 
               <div className="form-group">
@@ -151,7 +125,7 @@ const Register = () => {
                 </label>
                 <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" 
                   value={formData.confirmPassword} onChange={handleChange}
-                  placeholder="Re-enter password" />
+                  placeholder="Re-enter password" minLength={6} required />
               </div>
 
               <div className="form-group">
@@ -170,7 +144,7 @@ const Register = () => {
               </div>
 
               <div className="text-center mt-20" style={{borderTop: '1px solid var(--dark-border)', paddingTop: '20px'}}>
-                <p>Already have account? <a href="/login"><i className="fas fa-sign-in-alt"></i> Login</a></p>
+                <p>Already have account? <Link href="/login"><i className="fas fa-sign-in-alt"></i> Login</Link></p>
               </div>
             </form>
           </div>

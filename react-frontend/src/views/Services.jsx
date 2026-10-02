@@ -1,27 +1,56 @@
+import Link from 'next/link'
+import Image from 'next/image'
 import Navbar from '../components/Navbar.jsx'
 import Footer from '../components/Footer.jsx'
+import Reveal from '../components/Reveal.jsx'
 
 const Services = () => {
   return (
     <>
       <Navbar />
-      {/* Hero Section */}
       <section className="services-hero">
-        <div className="container">
-          <h1><i className="fas fa-tools"></i> Our Services</h1>
-          <p>Professional bike servicing and repair solutions tailored to keep your bike running smoothly and safely</p>
+        <div className="container services-hero-layout">
+          <Reveal className="services-hero-copy">
+            <span className="section-kicker">Small tune-up or big repair</span>
+            <h1><i className="fas fa-tools"></i> Care for every kind of ride.</h1>
+            <p>From everyday scooters to weekend cruisers, get thoughtful service from people who know bikes.</p>
+            <Link href="/register" className="btn btn-primary">
+              <i className="fas fa-calendar-check"></i> Book your visit
+            </Link>
+          </Reveal>
+          <Reveal className="services-hero-photo" delay={120}>
+            <Image
+              src="/images/sports-bike.jpg"
+              alt="Motorcycle and rider travelling on an open road"
+              fill
+              priority
+              loading="eager"
+              sizes="(max-width: 768px) 100vw, 48vw"
+            />
+            <span><i className="fas fa-shield-heart"></i> Made for the miles ahead</span>
+          </Reveal>
         </div>
       </section>
 
-      {/* Main Services */}
+      <section className="service-assurances" aria-label="Our service promises">
+        <div className="container service-assurances-grid">
+          <span><i className="fas fa-user-gear"></i> Skilled mechanics</span>
+          <span><i className="fas fa-clipboard-check"></i> Careful inspections</span>
+          <span><i className="fas fa-comments"></i> Clear communication</span>
+        </div>
+      </section>
+
       <section className="services-section">
         <div className="container">
-          <div className="section-header">
-            <h2><i className="fas fa-wrench"></i> Comprehensive Bike Services</h2>
-            <p>From routine maintenance to complex repairs, we offer a wide range of services for all bike brands</p>
-          </div>
+          <Reveal>
+            <div className="section-header section-heading">
+              <span className="section-kicker">One trusted stop for your bike</span>
+              <h2><i className="fas fa-wrench"></i> Find the care you need</h2>
+              <p>Pick a service to get started. We’ll help you figure out the details when you arrive.</p>
+            </div>
+          </Reveal>
           
-          <div className="services-grid">
+          <Reveal as="div" className="services-grid">
             {/* Regular Service */}
             <div className="service-card">
               <div className="service-card-header">
@@ -42,9 +71,9 @@ const Services = () => {
                 </ul>
               </div>
               <div className="service-card-footer">
-                <a href="/register" className="btn btn-primary">
+                <Link href="/register" className="btn btn-primary">
                   <i className="fas fa-calendar-check"></i> Book Now
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -68,9 +97,9 @@ const Services = () => {
                 </ul>
               </div>
               <div className="service-card-footer">
-                <a href="/register" className="btn btn-primary">
+                <Link href="/register" className="btn btn-primary">
                   <i className="fas fa-calendar-check"></i> Book Now
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -94,9 +123,9 @@ const Services = () => {
                 </ul>
               </div>
               <div className="service-card-footer">
-                <a href="/register" className="btn btn-primary">
+                <Link href="/register" className="btn btn-primary">
                   <i className="fas fa-calendar-check"></i> Book Now
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -120,9 +149,9 @@ const Services = () => {
                 </ul>
               </div>
               <div className="service-card-footer">
-                <a href="/register" className="btn btn-primary">
+                <Link href="/register" className="btn btn-primary">
                   <i className="fas fa-calendar-check"></i> Book Now
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -146,9 +175,9 @@ const Services = () => {
                 </ul>
               </div>
               <div className="service-card-footer">
-                <a href="/register" className="btn btn-primary">
+                <Link href="/register" className="btn btn-primary">
                   <i className="fas fa-calendar-check"></i> Book Now
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -172,12 +201,27 @@ const Services = () => {
                 </ul>
               </div>
               <div className="service-card-footer">
-                <a href="/register" className="btn btn-primary">
+                <Link href="/register" className="btn btn-primary">
                   <i className="fas fa-calendar-check"></i> Book Now
-                </a>
+                </Link>
               </div>
             </div>
-          </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="services-bottom-cta">
+        <div className="container">
+          <Reveal className="services-bottom-cta-inner">
+            <div>
+              <span className="section-kicker">Not sure what your bike needs?</span>
+              <h2>We’ll help you find the right service.</h2>
+              <p>Start with a booking and tell our team what’s going on.</p>
+            </div>
+            <Link href="/register" className="btn btn-light">
+              Talk to our team <i className="fas fa-arrow-right"></i>
+            </Link>
+          </Reveal>
         </div>
       </section>
 

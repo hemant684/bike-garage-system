@@ -1,6 +1,6 @@
 # Bike Garage Management System
 
-A comprehensive web-based system for managing bike servicing and repairs, built using HTML, CSS, JavaScript, PHP, and MySQL.
+A web-based system for managing bike servicing and repairs. The legacy application uses PHP and MySQL; the separate customer-facing frontend is built with Next.js and React.
 
 ## 🏍️ Features
 
@@ -24,6 +24,9 @@ A comprehensive web-based system for managing bike servicing and repairs, built 
 
 ```
 bike-garage-system/
+├── react-frontend/             # Next.js customer-facing frontend
+│   ├── app/                    # App Router pages and shared layout
+│   └── src/                    # React page components and light theme
 ├── config/
 │   └── db_config.php          # Database configuration
 ├── css/
@@ -45,6 +48,20 @@ bike-garage-system/
 ├── register.php               # User registration page
 └── forgot_password.php        # Password recovery page
 ```
+
+## Next.js React Frontend
+
+The frontend runs as a Next.js application and uses the existing PHP application for authentication, registration, booking, and billing.
+
+```bash
+cd react-frontend
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`. For local MAMP setups, `react-frontend/.env.local` should set `NEXT_PUBLIC_PHP_BACKEND_URL=http://localhost:8888`. Set that variable to the deployed PHP origin in the production environment before publishing. The PHP server and its MySQL database must be running for account and service forms to submit successfully.
+
+Production commands are `npm run build` and `npm run start`. Netlify uses the `react-frontend` base directory configured in `netlify.toml`.
 
 ## 🚀 Installation Steps
 
@@ -105,11 +122,11 @@ define('DB_PASS', ''); // Default XAMPP password is empty
 
 ## 🎨 Technology Stack
 
-- **Frontend:** HTML5, CSS3, JavaScript
-- **Backend:** PHP 7.0+
+- **Frontend:** Next.js 16, React 19, CSS3
+- **Legacy pages/backend:** PHP 7.0+
 - **Database:** MySQL
 - **Server:** Apache (XAMPP/WAMP)
-- **Validation:** Client-side (JS) + Server-side (PHP)
+- **Validation:** Browser-side form constraints + server-side (PHP)
 
 ## 📱 Features Implemented
 
@@ -185,4 +202,3 @@ This project is for educational purposes as a college project.
 ## 👨‍💻 Developer
 
 Created for college project demonstration.
-

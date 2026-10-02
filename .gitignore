@@ -9,6 +9,8 @@ package-lock.json
 /build
 /dist
 /react-frontend/dist
+/react-frontend/.next
+/react-frontend/out
 
 # Environment variables
 .env

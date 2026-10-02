@@ -1,12 +1,7 @@
 [build]
-command = "cd react-frontend && npm install && npm run build"
-publish = "react-frontend/dist"
+base = "react-frontend"
+command = "npm run build"
 
 [dev]
-command = "cd react-frontend && npm run dev"
+command = "npm run dev"
 port = 3000
-
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
